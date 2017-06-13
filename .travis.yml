@@ -6,30 +6,8 @@ os:
 compiler:
   - gcc
   - clang
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - llvm-toolchain-precise
-      - cmake
-      - clang-3.8
-      - clang-3.9
-      - g++-5
-      - g++-6
 before_script:
   - make info
 script:
   - make
   - make test
-after_failure:
-  - find . -name CMakeOutput.log -exec cat {} ";"
-  - find . -name CMakeError.log -exec cat {} ";"
-notifications:
-  email:
-    recipients:
-      - jeff.science@gmail.com
-#      - inteltbbdevelopers@intel.com
-    on_success:
-      - change
-    on_failure:
-      - always
