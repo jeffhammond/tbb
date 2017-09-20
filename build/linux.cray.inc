@@ -16,8 +16,8 @@
 #
 #
 
-COMPILE_ONLY = -c -MMD
-PREPROC_ONLY = -E -x c++
+COMPILE_ONLY = -c
+PREPROC_ONLY = -E
 INCLUDE_KEY = -I
 DEFINE_KEY = -D
 OUTPUT_KEY = -o #
@@ -40,18 +40,12 @@ else
 CPLUS_FLAGS = $(ITT_NOTIFY) -O0 -g -DUSE_PTHREAD -DTBB_USE_DEBUG
 endif
 
-LIB_LINK_FLAGS = -shared -Wl,-soname=$(BUILDING_LIBRARY) -z relro -z now
+LIB_LINK_FLAGS = -shared -Wl,-soname=$(BUILDING_LIBRARY) -Wl,-z,relro -Wl,-z,now
 LIBS += -lpthread -lrt
-LINK_FLAGS = -rdynamic
+LINK_FLAGS =
 C_FLAGS = $(CPLUS_FLAGS)
 
 OPENMP_FLAG = -h omp
-
-ifeq (intel64,$(arch))
-    ITT_NOTIFY = -DDO_ITT_NOTIFY
-    CPLUS_FLAGS += -m64
-    LIB_LINK_FLAGS += -m64
-endif
 
 TBB_ASM.OBJ=
 MALLOC_ASM.OBJ=
@@ -84,7 +78,7 @@ endif
 # Setting tbbmalloc data.
 #------------------------------------------------------------------------------
 
-M_CPLUS_FLAGS = $(CPLUS_FLAGS) -fno-rtti -fno-exceptions
+M_CPLUS_FLAGS = $(CPLUS_FLAGS)
 
 #------------------------------------------------------------------------------
 # End of setting tbbmalloc data.
